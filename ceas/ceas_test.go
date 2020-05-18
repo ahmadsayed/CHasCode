@@ -12,7 +12,8 @@ func setupTestCase(t *testing.T) func(t *testing.T) {
 	t.Log("setup test case")
 	CreateCluster(1, 3)
 	return func(t *testing.T) {
-		DeleteCluster()
+		t.Log("teardown delete the whole cluster")
+		//	DeleteCluster()
 	}
 }
 
@@ -21,8 +22,8 @@ func setupSubTest(t *testing.T, tc Testcase) func(t *testing.T) {
 	BuildAndLoadDocker(tc.dockerPath, tc.appname)
 	DeployApp(tc.yamlPath)
 	return func(t *testing.T) {
-		t.Log("teardown sub test")
-		RemoveApp(tc.yamlPath)
+		t.Log("teardown Remove App")
+		//	RemoveApp(tc.yamlPath)
 	}
 }
 
