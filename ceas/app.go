@@ -59,7 +59,6 @@ func DeployApp(yamlPath string) {
 		fmt.Println("Wait for app to start ...")
 
 		time.Sleep(5000 * time.Millisecond)
-
 	}
 
 }

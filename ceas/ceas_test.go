@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"testing"
+	"time"
 )
 
 type Testcase struct {
@@ -46,6 +47,9 @@ func TestAddtionFirst(t *testing.T) {
 		t.Run(tc.appname, func(t *testing.T) {
 			teardownSubTest := setupSubTest(t, tc)
 			defer teardownSubTest(t)
+			// Using this 10 Seconds better to use the health checker
+			fmt.Println("Settle for 10 Seconds to insure ingress pick up the configuration")
+			time.Sleep(10000 * time.Millisecond)
 			// Dummy test case for now, as I am still checking setup and teardown
 			result := "{\"status\":\"UP\"}"
 			resp, err := http.Get("http://localhost/health")
@@ -56,7 +60,7 @@ func TestAddtionFirst(t *testing.T) {
 			body, _ := ioutil.ReadAll(resp.Body)
 			val := string(body)
 			if result != val {
-				t.Fatalf("expected sum %v, but got %v", val, result)
+				t.Fatalf("expected sum %v, but got %v", result, val)
 			}
 		})
 	}
