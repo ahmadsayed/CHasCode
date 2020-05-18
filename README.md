@@ -14,12 +14,12 @@ The Functional Unit test suite, can run normally, but under different simulated 
   - Build a cluster with specific number of masters and worker nodes
   - Build a cluster and test the application on different version of kubernetes even within the cluster 
   - Gracefully kill worker nodes
-  - Deploy and undeploy specific worker nodes
+  - Deploy and undeploy specific workloads
 
 
 ## This repository contains
 
-This approach is mainly a methodolgy not a framework, still trying to build a standard set of use cases, which simply can use, also using the libraries that can help , manage kubernetes cluster , deploy application programmatically.
+This approach is mainly a methodolgy not a framework, still trying to build a standard set of use cases, which can be used directly as base minimal set of standard test cases, also using the libraries that can help , manage kubernetes cluster , deploy application programmatically.
 
 
 ```
