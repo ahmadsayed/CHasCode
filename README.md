@@ -9,7 +9,7 @@ The Functional Unit test suite, can run normally, but under different simulated 
 ## The approach is as following 
 - Using imperative programming language the current Repository using golang
 - Use the strong foundation provided in the go Unit testing, instead of providing declartive syntax using XML, JSON or Yaml, so it can be part of Unit test suite.
-- Run quickly in relatively limited resources, the current code able to build up 1 master, 3 workers nodes cluster run a simple test case ~  300-400 Seconds.
+- Run quickly in relatively limited resources, the current code able to build up 1 master, 3 workers nodes cluster run a simple test case ~  300-400 Seconds, - there is still many potential optimization to speed up this - 
 - Build libraries that help Chaos Engineer progrmatically with imperative language manage cluster such as but not limied to 
   - Build a cluster with specific number of masters and worker nodes
   - Build a cluster and test the application on different version of kubernetes even within the cluster 
