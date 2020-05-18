@@ -41,6 +41,7 @@ func TestAddtionFirst(t *testing.T) {
 		t.Run(tc.appname, func(t *testing.T) {
 			teardownSubTest := setupSubTest(t, tc)
 			defer teardownSubTest(t)
+			// Dummy test case for now, as I am still checking setup and teardown
 			result := 5
 			if result != 5 {
 				t.Fatalf("expected sum %v, but got %v", 5, result)
