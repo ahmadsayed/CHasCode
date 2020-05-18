@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-
+	"time"
+	"strings"
 )
 
 // BuildAndLoadDocker  provide projectFolder which contains Docker file, imagename the name used in the deployment
@@ -43,6 +44,24 @@ func DeployApp(yamlPath string) {
 	fmt.Println("Deploying Application")
 	//kind load docker-image my-custom-image:unique-tag
 	manageApp(yamlPath, "apply")
+
+	for {
+		cmd := exec.Command("kubectl", "get", "po", "-n", "default")
+		stdout, err := cmd.Output()
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		if strings.Contains(string(stdout), "1/1") && strings.Contains(string(stdout), "Running") {
+			break
+		}
+		fmt.Println("Wait for app to start ...")
+
+		time.Sleep(5000 * time.Millisecond)
+
+	}
+
 }
 
 // Removing Sepcific App 

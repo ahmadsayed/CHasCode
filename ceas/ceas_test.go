@@ -1,6 +1,11 @@
 package ceas
 
-import "testing"
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"testing"
+)
 
 type Testcase struct {
 	appname    string
@@ -13,7 +18,7 @@ func setupTestCase(t *testing.T) func(t *testing.T) {
 	CreateCluster(1, 3)
 	return func(t *testing.T) {
 		t.Log("teardown delete the whole cluster")
-		//	DeleteCluster()
+		DeleteCluster()
 	}
 }
 
@@ -23,7 +28,7 @@ func setupSubTest(t *testing.T, tc Testcase) func(t *testing.T) {
 	DeployApp(tc.yamlPath)
 	return func(t *testing.T) {
 		t.Log("teardown Remove App")
-		//	RemoveApp(tc.yamlPath)
+		RemoveApp(tc.yamlPath)
 	}
 }
 
@@ -42,9 +47,16 @@ func TestAddtionFirst(t *testing.T) {
 			teardownSubTest := setupSubTest(t, tc)
 			defer teardownSubTest(t)
 			// Dummy test case for now, as I am still checking setup and teardown
-			result := 5
-			if result != 5 {
-				t.Fatalf("expected sum %v, but got %v", 5, result)
+			result := "{\"status\":\"UP\"}"
+			resp, err := http.Get("http://localhost/health")
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+			defer resp.Body.Close()
+			body, _ := ioutil.ReadAll(resp.Body)
+			val := string(body)
+			if result != val {
+				t.Fatalf("expected sum %v, but got %v", val, result)
 			}
 		})
 	}
