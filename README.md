@@ -1,15 +1,17 @@
 # Chaos Engineering as Code 
 
-For Chaos Engineering the approach in trying to attempt in here, instead of injecting failure to running server, the approach in here is develop different methodology
-Is to build the cluster on the fly, may be as part of the DevOps pipeline  
+For Chaos Engineering the approach I am  trying to attempt in here, *instead of injecting failure to running server*, the approach in here is *to develop different methodology*
+Is to build the cluster on the fly, may be as part of the DevOps pipeline
+The cluster will be running with the same topology of the expected target enviroments for example  Multiple masters ,Multiple Workers
 
 ## The approach is as following 
 - Using imperative programming language the current Repository using golang
-- Use the strong foundation provided in the Unit testing 
+- Use the strong foundation provided in the go Unit testing, instead of providing declartive syntax using XML, JSON or Yaml, so it can be integrated easily.
 - Build libraries that help Chaos Engineer progrmatically with imperative language manage cluster such as not limied to 
   - Build a cluster with specific number of masters and worker nodes
   - Build a cluster and test the application on different version of kubernetes even within the cluster 
   - Gracefully kill worker nodes and check the effect 
+- Run quickly in relatively limited resources, the current code able to build up 1 master, 3 workers nodes cluster an run simple test case ~  300 Seconds.
 
 ## What is repository provides 
 
