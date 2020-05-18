@@ -13,7 +13,7 @@ The cluster will be running with the same topology of the expected target enviro
   - Gracefully kill worker nodes and check the effect 
 - Run quickly in relatively limited resources, the current code able to build up 1 master, 3 workers nodes cluster an run simple test case ~  300 Seconds.
 
-## What is repository provides 
+## This repository contains
 
 This approach is mainly a methodolgy not a framework, still trying to build a standard set of use cases, which simply can use, also using the libraries that can help , manage kubernetes cluster , deploy application programmatically.
 
