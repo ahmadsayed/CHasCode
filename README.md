@@ -33,12 +33,17 @@ The following scenario planned to be executed
 
 The whole project now is around using Kubernetes in Docker [kind](https://kind.sigs.k8s.io/docs/user/quick-start/), also the current code is based on  exec kind and kubectl command, may be a better approach is to replace it with library based approach like k8s go client or via kubernetes Rest API, still kubectl exec is simpler approach, as well as it provides some sort of isolation layer between the unit-testing libs, and underlaying kubernetes version
 
-## how to run 
+## How to run 
+Your machine needs to have docker and kind already installed on the executable Path.
+
 Go and edit ceas_test.go according to your test case, define the number of worker nodes 
 define normal state situlation, then invoke 
 
+Point our to the docker file as well as the deployment descriptor , in case of helm you can generate helm template.
+
+run 
 ```
 go test
 ```
 
-This is still PoC work in Progress, in the upcoming day will introduce the Chaos Mode, to start killing worker nodes and test its impact on the  project
+This is still PoC work in Progress, in very early stage, in the upcoming day will introduce the Chaos Mode, to start killing worker nodes and test its impact on the  project
