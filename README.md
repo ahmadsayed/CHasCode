@@ -22,10 +22,6 @@ The Functional Unit test suite, can run normally, but under different simulated 
 This approach is mainly a methodolgy not a framework, still trying to build a standard set of use cases, which can be used directly as base minimal set of standard test cases, also using the libraries that can build , manage kubernetes cluster , deploy application programmatically, as well as break the cluster drop worker nodes
 
 
-```
-go test 
-```
-
 The following scenario planned to be executed 
 - Create a cluster and deploy applications
 - Randomly Kill and bring up worker nodes 
@@ -36,3 +32,13 @@ The following scenario planned to be executed
 ## Current Scope and suggesed potential enhacements
 
 The whole project now is around using Kubernetes in Docker [kind](https://kind.sigs.k8s.io/docs/user/quick-start/), also the current code is based on  exec kind and kubectl command, may be a better approach is to replace it with library based approach like k8s go client or via kubernetes Rest API, still kubectl exec is simpler approach, as well as it provides some sort of isolation layer between the unit-testing libs, and underlaying kubernetes version
+
+## how to run 
+Go and edit ceas_test.go according to your test case, define the number of worker nodes 
+define normal state situlation, then invoke 
+
+```
+go test
+```
+
+This is still PoC work in Progress, in the upcoming day will introduce the Chaos Mode, to start killing worker nodes and test its impact on the  project
