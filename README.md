@@ -1,6 +1,6 @@
 # Chaos Engineering as Code 
 
-For Chaos Engineering the approach I am proposing, *instead of injecting failure to running Kubernetes Cluster*, instead *to develop different methodology by bringing up a Kubernetes Cluster dedicated for Chaos Testing*
+For Chaos Engineering the approach I am proposing, *instead of injecting failure to running Kubernetes Cluster*, instead *to develop different methodology by bringing up a Kubernetes Cluster dedicated for Chaos Testing and manipulate it programatically*
 This can even run be as part of the DevOps pipeline, 
 The cluster will be running with the same topology of the expected target enviroments for example  Multiple masters ,Multiple Workers
 
