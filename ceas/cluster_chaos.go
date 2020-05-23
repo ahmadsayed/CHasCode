@@ -28,12 +28,12 @@ func manageWorker(action string, node int) error {
 
 }
 
-// StopSpecificWorkerNode, docker stop worker nodes named as follow by default kind-worker, kind-worker2, kind-worker3, ..... kind-workern
-func StopSpecificWorkerNode(node int) error {
+// StopWorkerNode, docker stop worker nodes named as follow by default kind-worker, kind-worker2, kind-worker3, ..... kind-workern
+func StopWorkerNode(node int) error {
 	return manageWorker("stop", node)
 }
 
-// StartSpecificWorkerNode, docker start the worker node container
-func StartSpecificWorkerNode(node int) error {
+// StartWorkerNode, docker start the worker node container
+func StartWorkerNode(node int) error {
 	return manageWorker("start", node)
 }

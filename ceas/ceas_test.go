@@ -12,11 +12,12 @@ type Testcase struct {
 	appname    string
 	yamlPath   string
 	dockerPath string
+	nodetoKill []int
 }
 
 func setupTestCase(t *testing.T) func(t *testing.T) {
 	t.Log("setup test case")
-	CreateCluster(1, 3)
+	CreateCluster(1, 3, true)
 	return func(t *testing.T) {
 		t.Log("teardown delete the whole cluster")
 		DeleteCluster()
@@ -36,9 +37,15 @@ func setupSubTest(t *testing.T, tc Testcase) func(t *testing.T) {
 func TestAddtionFirst(t *testing.T) {
 	cases := []Testcase{
 		{
-			"nodejsdemo:latest",
-			"C:\\Users\\AHMEDSAYEDHASSANABDE\\nodejs-demo\\deployment.yaml",
-			"C:\\Users\\AHMEDSAYEDHASSANABDE\\nodejs-demo",
+			appname:    "nodejsdemo:latest",
+			yamlPath:   "C:\\Users\\AHMEDSAYEDHASSANABDE\\nodejs-demo\\deployment.yaml",
+			dockerPath: "C:\\Users\\AHMEDSAYEDHASSANABDE\\nodejs-demo",
+		},
+		{
+			appname:    "nodejsdemo:latest",
+			yamlPath:   "C:\\Users\\AHMEDSAYEDHASSANABDE\\nodejs-demo\\deployment.yaml",
+			dockerPath: "C:\\Users\\AHMEDSAYEDHASSANABDE\\nodejs-demo",
+			nodetoKill: []int{1, 2},
 		},
 	}
 	teardownTestCase := setupTestCase(t)
@@ -52,16 +59,24 @@ func TestAddtionFirst(t *testing.T) {
 			time.Sleep(10000 * time.Millisecond)
 			// Dummy test case for now, as I am still checking setup and teardown
 			result := "{\"status\":\"UP\"}"
-			resp, err := http.Get("http://localhost/health")
-			if err != nil {
-				fmt.Println(err.Error())
+			if tc.nodetoKill != nil {
+				fmt.Println("Kill Node ", tc.nodetoKill)
+				for _, nodeNumber := range tc.nodetoKill {
+					StopWorkerNode(nodeNumber)
+					defer StartWorkerNode(nodeNumber)
+				}
+				resp, err := http.Get("http://localhost/health")
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				defer resp.Body.Close()
+				body, _ := ioutil.ReadAll(resp.Body)
+				val := string(body)
+				if result != val {
+					t.Fatalf("expected sum %v, but got %v", result, val)
+				}
 			}
-			defer resp.Body.Close()
-			body, _ := ioutil.ReadAll(resp.Body)
-			val := string(body)
-			if result != val {
-				t.Fatalf("expected sum %v, but got %v", result, val)
-			}
+
 		})
 	}
 }

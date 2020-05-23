@@ -1,15 +1,12 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/CHasCode/ceas"
-)
+import "github.com/CHasCode/ceas"
 
 func main() {
 	// Create Cluster 1 master nodes and 3 workers
 	// Install Nignx Ingress on the control-plan
-	//ceas.CreateCluster(1, 3)
+	//	ceas.CreateCluster(1, 3, true)
+	//ceas.InstallVisulization()
 	// Build a docker from source code and load it to the cluster registry not required
 	//	ceas.BuildAndLoadDocker("C:\\Users\\AHMEDSAYEDHASSANABDE\\nodejs-demo", "nodejsdemo:latest")
 	// Deploy app on the cluster
@@ -30,8 +27,9 @@ func main() {
 
 		ceas.RemoveApp("C:\\Users\\AHMEDSAYEDHASSANABDE\\nodejs-demo\\deployment.yaml")
 	*/
-	err := ceas.StartSpecificWorkerNode(2)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	//err := ceas.StartSpecificWorkerNode(2)
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
+	ceas.InstallVisulization()
 }

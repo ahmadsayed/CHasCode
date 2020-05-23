@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -125,8 +126,48 @@ func DeleteClusterIfExists() {
 	}
 }
 
+func portForwardWeave() {
+	cmd := exec.Command("kubectl", "port-forward", "-n", "weave", "deployment/weave-scope-app", "4040")
+	//cmd.Stdout = os.Stdout
+	err := cmd.Start()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Just ran subprocess %d, exiting\n", cmd.Process.Pid)
+}
+
+//InstallVisulization
+func InstallVisulization() {
+
+	fmt.Println("Installing weavescope")
+	cmd := exec.Command("kubectl", "apply", "-f", "https://cloud.weave.works/k8s/scope.yaml")
+	_, err := cmd.Output()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Println("Wait for weave to get to running state")
+	for {
+		cmd := exec.Command("kubectl", "get", "po", "-n", "weave")
+		stdout, err := cmd.Output()
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		if strings.Contains(string(stdout), "1/1") && strings.Contains(string(stdout), "Running") {
+			break
+		}
+		fmt.Println("Wait for weave to start ...")
+		time.Sleep(10000 * time.Millisecond)
+
+	}
+
+	portForwardWeave()
+	openbrowser("http://localhost:4040/#!/state/{%22topologyId%22:%22hosts%22}")
+
+}
+
 // CreateCluster create a kind cluster
-func CreateCluster(numberOfMasters, numberOfWorkers int) {
+func CreateCluster(numberOfMasters, numberOfWorkers int, visualization bool) {
 
 	// Check if kind cluster exists delete if exists
 	DeleteClusterIfExists()
@@ -192,6 +233,12 @@ func CreateCluster(numberOfMasters, numberOfWorkers int) {
 
 		time.Sleep(10000 * time.Millisecond)
 
+	}
+
+	// Install weavescope
+
+	if visualization {
+		InstallVisulization()
 	}
 
 }
