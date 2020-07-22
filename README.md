@@ -6,6 +6,8 @@ The cluster will be running with the same topology of the expected target enviro
 
 The Functional Unit test suite, can run normally, but under different simulated hazerdous enviroments.
 
+[![!Demp](https://img.youtube.com/vi/moMnHb8y0U8/0.jpg)](https://www.youtube.com/watch?v=moMnHb8y0U8)
+
 ## The approach is as following 
 - Using imperative programming language the current Repository using golang
 - Use the strong foundation provided in the go Unit testing, instead of providing declartive syntax using XML, JSON or Yaml, so it can be part of Unit test suite.
